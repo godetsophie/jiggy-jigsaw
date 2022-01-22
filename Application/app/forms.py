@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.models import User
+from app.models import Image
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -25,8 +26,19 @@ class SignUpForm(UserCreationForm):
     last_name = forms.CharField(max_length=100, help_text='Last Name')
     email = forms.EmailField(max_length=150, help_text='Email')
 
-
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name',
 'email', 'password1', 'password2',)
+
+class ImageForm(forms.ModelForm):
+    """Form for the image model"""
+    class Meta:
+        model = Image
+        fields = ('title', 'image')
+
+class PlayForm(forms.ModelForm):
+    """Form for the image model"""
+    class Meta:
+        model = Image
+        fields = ('title', 'image')

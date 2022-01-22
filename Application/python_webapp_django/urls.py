@@ -3,12 +3,12 @@ Definition of urls for python_webapp_django.
 """
 
 from datetime import datetime
+from django import views
 from django.urls import path
 import django.contrib.auth.views
 from django.views.static import serve
 from django.conf import settings
 import app.forms
-import app.views as a_v
 from app.views import signup_view
 
 # Uncomment the next lines to enable the admin:
@@ -19,9 +19,8 @@ from app.views import signup_view
 urlpatterns = [
     # Examples:
     path('', app.views.home, name='home'),
-    path('contact', app.views.contact, name='contact'),
-    path('about', app.views.about, name='about'),
-    path('play', app.views.about, name='play'),
+    path('play', app.views.play_view, name='play'),
+    path('upload', app.views.upload_image_view, name='upload'),
     path('login/',
         django.contrib.auth.views.LoginView.as_view(),
         {
@@ -42,6 +41,7 @@ urlpatterns = [
         },
         name='logout'),
     path('static/(<path>.*)', serve,{'document_root': settings.STATIC_ROOT}),
+    path('media/(<path>.*)', serve,{'document_root': settings.MEDIA_ROOT}),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # path(r'^admin/doc/', include('django.contrib.admindocs.urls')),

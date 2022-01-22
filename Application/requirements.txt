@@ -1,4 +1,4 @@
 django
 django-crispy-forms
 whitenoise
-
+pillow

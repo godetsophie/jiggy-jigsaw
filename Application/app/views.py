@@ -2,14 +2,18 @@
 Definition of views.
 """
 
+import mimetypes
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.shortcuts import render,redirect
+from app.models import GetImage 
+from app.play import PlayForm
+from app.forms import ImageForm 
 
 def home(request):
     """Renders the home page."""
@@ -49,17 +53,10 @@ def about(request):
         }
     )
 
-def play(request):
-    """Renders the play page."""
-    assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'play.html',
-        {
-            'title':'Play Jiggy Jigsaw',
-            'message':'start playing',
-        }
-    )
+def play_view(request):  
+    # getting all the objects of hotel. 
+    pictures = GetImage.objects.all()  
+    return render(request, 'play.html',{'pictures' : pictures})
 
 def signup_view(request):
     form = UserCreationForm(request.POST)
@@ -71,3 +68,16 @@ def signup_view(request):
         login(request, user)
         return redirect('home')
     return render(request, 'registration/signup.html', {'form': form})
+
+def upload_image_view(request):
+    """Process images uploaded by users"""
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # Get the current instance object to display in the template
+            img_obj = form.instance
+            return render(request, 'upload.html', {'form': form, 'img_obj': img_obj})
+    else:
+        form = ImageForm()
+    return render(request, 'upload.html', {'form': form})
