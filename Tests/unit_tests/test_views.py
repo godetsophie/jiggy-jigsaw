@@ -13,7 +13,7 @@ This is set in manage.py. We need to explicitly set it for tests to work with py
 
 sys.path.append(os.path.join(os.getcwd(), 'Application'))
 
-settings_module = "python_webapp_django.production" if 1 else 'python_webapp_django.settings'    
+settings_module = "python_webapp_django.settings" # "python_webapp_django.production" if 1 else 'python_webapp_django.settings'    
 os.environ.setdefault(
     "DJANGO_SETTINGS_MODULE",
     settings_module

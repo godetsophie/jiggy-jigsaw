@@ -38,7 +38,7 @@ ROOT_URLCONF = 'python_webapp_django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [str(BASE_DIR.joinpath('app', 'templates'))],
+        'DIRS': [] ,#str(BASE_DIR.joinpath('app', 'templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -61,7 +61,7 @@ hostname = 'sophiegodet'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'jiggyjigsaw',
+        'NAME': 'postgres',
         'HOST': 'sophiegodet.postgres.database.azure.com',
         'USER': 'adminsg4@sophiegodet',
         'PASSWORD':'25Decembre' 
