@@ -80,23 +80,23 @@ WSGI_APPLICATION = 'python_webapp_django.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # if 1 == 1:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': str(os.path.join(BASE_DIR, "db.sqlite3"))
-#         }
-#     }
-# else:
-# hostname = os.environ['DBHOST']
-DATABASES= {
+DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'jiggyjigsaw',
-        'HOST': 'sophiegodet.postgres.database.azure.com',
-        'USER': 'admingsg4@sophiegodet',
-        'PASSWORD': '25Decembre'  
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': str(os.path.join(BASE_DIR, "db.sqlite3"))
     }
 }
+# else:
+# hostname = os.environ['DBHOST']
+# DATABASES= {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'jiggyjigsaw',
+#         'HOST': 'sophiegodet.postgres.database.azure.com',
+#         'USER': 'admingsg4@sophiegodet',
+#         'PASSWORD': '25Decembre'  
+#     }
+# }
 
 
 

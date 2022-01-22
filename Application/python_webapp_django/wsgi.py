@@ -15,8 +15,8 @@ framework.
 """
 import os
 
-#settings_module = "python_webapp_django.production" if 'WEBSITE_HOSTNAME' in os.environ else 'python_webapp_django.settings'
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'python_webapp_django.settings')
+settings_module = "python_webapp_django.production" if 'WEBSITE_HOSTNAME' in os.environ else 'python_webapp_django.settings'
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
