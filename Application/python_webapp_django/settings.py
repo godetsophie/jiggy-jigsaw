@@ -79,24 +79,24 @@ WSGI_APPLICATION = 'python_webapp_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if 1 == 1:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': str(os.path.join(BASE_DIR, "db.sqlite3"))
-        }
+# if 1 == 1:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': str(os.path.join(BASE_DIR, "db.sqlite3"))
+#         }
+#     }
+# else:
+hostname = os.environ['DBHOST']
+DATABASES= {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['DBNAME'],
+        'HOST': hostname + ".postgres.database.azure.com",
+        'USER': os.environ['DBUSER'] + "@" + hostname,
+        'PASSWORD': os.environ['DBPASS']  
     }
-else:
-    hostname = os.environ['DBHOST']
-    DATABASES= {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ['DBNAME'],
-            'HOST': hostname + ".postgres.database.azure.com",
-            'USER': os.environ['DBUSER'] + "@" + hostname,
-            'PASSWORD': os.environ['DBPASS']  
-        }
-    }
+}
 
 
 
