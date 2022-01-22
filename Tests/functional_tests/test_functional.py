@@ -17,7 +17,7 @@ class FunctionalTests(unittest.TestCase):
 	def test_selenium(self):
 		webAppUrl = pytest.config.getoption('webAppUrl')
 		start_timestamp = time.time()
-		end_timestamp = start_timestamp + 60*10
+		end_timestamp = start_timestamp + 60
 		while True:
 			try:
 				response = self.driver.get(webAppUrl)

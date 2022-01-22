@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '74c0781b-18aa-4eb3-82ef-5d1531481ffb'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [    
@@ -38,7 +38,7 @@ ROOT_URLCONF = 'python_webapp_django.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [], #[str(BASE_DIR.joinpath('templates'))],
+        'DIRS': [str(BASE_DIR.joinpath('app', 'templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

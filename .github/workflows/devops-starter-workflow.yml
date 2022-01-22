@@ -152,7 +152,7 @@ jobs:
       continue-on-error: false
       run: |
         mkdir functionaltestresults
-        pip install wheel && pip install selenium && pip install pytest==4.6.11 && cd ./Tests && python -m pytest functional_tests/ --webAppUrl=https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net/ --junitxml=../functionaltestresults/functional-test-results.xml
+        pip install wheel && pip install selenium && pip install pytest==4.6.11 && cd ./Tests && python -m pytest functional_tests/ --webAppUrl=https://jiggy-jigsaw.azurewebsites.net/ --junitxml=../functionaltestresults/functional-test-results.xml
 
     # Uploading functional test results to artifact store
     - name: Upload functional test results to Artifact
