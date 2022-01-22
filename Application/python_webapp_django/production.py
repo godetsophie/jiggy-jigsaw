@@ -54,17 +54,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'python_webapp_django.wsgi.application'
 
 # DBHOST is only the server name, not the full URL
-hostname = os.environ['DBHOST']
+hostname = 'sophiegodet'
 
 # Configure Postgres database; the full username is username@servername,
 # which we construct using the DBHOST value.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DBNAME'],
-        'HOST': hostname + ".postgres.database.azure.com",
-        'USER': os.environ['DBUSER'] + "@" + hostname,
-        'PASSWORD': os.environ['DBPASS']  
+        'NAME': 'jiggyjigsaw',
+        'HOST': 'sophiegodet.postgres.database.azure.com',
+        'USER': 'adminsg4@sophiegodet',
+        'PASSWORD':'25Decembre' 
     }
 }
 
