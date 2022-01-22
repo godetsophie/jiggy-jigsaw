@@ -6,16 +6,17 @@ import django
 from django.test import TestCase
 import os
 import sys
-
 """
 When we use Django, we have to tell it which settings we are using. We do this by using an environment variable, DJANGO_SETTINGS_MODULE. 
 This is set in manage.py. We need to explicitly set it for tests to work with pytest.
 """
 
 sys.path.append(os.path.join(os.getcwd(), 'Application'))
+
+settings_module = "python_webapp_django.production" if 'WEBSITE_HOSTNAME' in os.environ else 'python_webapp_django.settings'    
 os.environ.setdefault(
     "DJANGO_SETTINGS_MODULE",
-    "python_webapp_django.settings"
+    settings_module
 )
 django.setup()
 

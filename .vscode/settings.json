@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./Application/app"
+        "./Application/app",
+        "./Application"
     ]
 }
