@@ -12,8 +12,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.shortcuts import render,redirect
-from numpy import full_like
-from app.play import PlayForm
 from app.forms import ImageForm
 from app.models import PlayImage
 from python_webapp_django.settings import MEDIA_ROOT, MEDIA_URL 
