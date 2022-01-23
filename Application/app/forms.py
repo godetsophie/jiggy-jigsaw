@@ -5,10 +5,8 @@ Definition of forms.
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
-from django.urls import reverse_lazy
-from django.views import generic
 from django.contrib.auth.models import User
-from app.models import Image
+from app.models import PlayImage
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -34,11 +32,11 @@ class SignUpForm(UserCreationForm):
 class ImageForm(forms.ModelForm):
     """Form for the image model"""
     class Meta:
-        model = Image
-        fields = ('title', 'image')
+        model = PlayImage
+        fields = ('id', 'title', 'image')
 
 class PlayForm(forms.ModelForm):
     """Form for the image model"""
     class Meta:
-        model = Image
+        model = PlayImage
         fields = ('title', 'image')

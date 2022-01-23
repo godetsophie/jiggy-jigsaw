@@ -1,7 +1,7 @@
 """
 Definition of urls for python_webapp_django.
 """
-
+from django.conf.urls.static import static
 from datetime import datetime
 from django import views
 from django.urls import path
@@ -19,7 +19,8 @@ from app.views import signup_view
 urlpatterns = [
     # Examples:
     path('', app.views.home, name='home'),
-    path('play', app.views.play_view, name='play'),
+    path('play/', app.views.play_view, name='play'),
+    path('play/<int:id>/', app.views.play_view, name='play'),
     path('upload', app.views.upload_image_view, name='upload'),
     path('login/',
         django.contrib.auth.views.LoginView.as_view(),
@@ -40,12 +41,11 @@ urlpatterns = [
             'next_page': '/',
         },
         name='logout'),
-    path('static/(<path>.*)', serve,{'document_root': settings.STATIC_ROOT}),
-    path('media/(<path>.*)', serve,{'document_root': settings.MEDIA_ROOT}),
-
+    path('static/<path>', serve,{'document_root': settings.STATIC_ROOT}),
     # Uncomment the admin/doc line below to enable admin documentation:
     # path(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     #path(r'^admin/', include(admin.site.urls)),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

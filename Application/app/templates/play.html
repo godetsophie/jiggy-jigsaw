@@ -3,10 +3,18 @@
 
 {% block content %}
 {% load static %}
-<section id="playForm">
-    <h1>Test</h1>
-    <div class="main-container" style="height: auto;">
-        <img src="/{{ BASIC_DIR }}/{{img.img}}" width="120"/>
+<h1>Test</h1>
+
+<h1>{{ full_url }}</h1>
+{% for img in images %}
+<img src="{{ img.image.url }}" />
+{% endfor %}
+<!-- <div class="col-md-3 col-sm-4 col-xs-6">
+    <img class="img-responsive" src={{ full_url }} />
+</div> -->
+<!-- {% for g in gallery %}
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <img class="img-responsive" src={{ g.full_url }} />
     </div>
-</section>
+{% endfor %} -->
 {% endblock %}

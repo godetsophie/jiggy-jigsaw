@@ -2,7 +2,8 @@
 Definition of views.
 """
 
-import mimetypes
+from __future__ import barry_as_FLUFL
+import os
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.template import RequestContext
@@ -11,9 +12,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.shortcuts import render,redirect
-from app.models import GetImage 
+from numpy import full_like
 from app.play import PlayForm
-from app.forms import ImageForm 
+from app.forms import ImageForm
+from app.models import PlayImage
+from python_webapp_django.settings import MEDIA_ROOT, MEDIA_URL 
 
 def home(request):
     """Renders the home page."""
@@ -53,10 +56,15 @@ def about(request):
         }
     )
 
-def play_view(request):  
-    # getting all the objects of hotel. 
-    pictures = GetImage.objects.all()  
-    return render(request, 'play.html',{'pictures' : pictures})
+def play_view(request, id:int = None):  
+    if request.method == 'POST':
+        pass
+    elif request.method == 'GET':
+        if id is None:
+            pass
+        else:
+            imgs = PlayImage.objects.all()
+            return render(request, 'play.html', {'images': imgs, 'media_root': MEDIA_ROOT, 'media_url': MEDIA_URL})
 
 def signup_view(request):
     form = UserCreationForm(request.POST)
@@ -75,9 +83,10 @@ def upload_image_view(request):
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            
             # Get the current instance object to display in the template
             img_obj = form.instance
-            return render(request, 'upload.html', {'form': form, 'img_obj': img_obj})
+            return redirect('play', img_obj.id)
     else:
         form = ImageForm()
     return render(request, 'upload.html', {'form': form})
