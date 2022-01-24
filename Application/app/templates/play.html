@@ -3,18 +3,24 @@
 
 {% block content %}
 {% load static %}
-<h1>Test</h1>
-
-<h1>{{ full_url }}</h1>
-{% for img in images %} 
-<img src="{{ img.image.url }}" />
-{% endfor %}
-<!-- <div class="col-md-3 col-sm-4 col-xs-6">
-    <img class="img-responsive" src={{ full_url }} />
-</div> -->
-<!-- {% for g in gallery %}
-    <div class="col-md-3 col-sm-4 col-xs-6">
-        <img class="img-responsive" src={{ g.full_url }} />
-    </div>
-{% endfor %} -->
+<div style="height:80%; padding-top: 10%;">
+        <form method="post">
+            {% csrf_token %}
+            {% if success == True %}
+                <h1>Mazel Tov !</h1>
+            {% else %}
+                {% for x in images %}
+                    <div style="display: flex; justify-content: center; ">
+                    {% for y in x %}
+                        <button type="submit" name='gt_id' value={{y.id}}><img src={{ y.tile.image.url }} ;' /></button>
+        
+                    {% endfor %}    
+                    </div>
+                {% endfor %}
+                <div style="display: flex; justify-content: center; padding-top : 4%; ">
+                    <button type="submit" name='validate' value={{ parent.id }} class="btn btn-default">Validate</button>
+                </div>
+            {% endif%}
+        </form>
+</div>
 {% endblock %}

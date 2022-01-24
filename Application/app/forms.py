@@ -6,7 +6,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-from app.models import PlayImage
+from app.models import PlayImage, Tile
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -34,6 +34,12 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = PlayImage
         fields = ('id', 'title', 'image')
+
+class TileForm(forms.ModelForm):
+    """Form for the image model"""
+    class Meta:
+        model = Tile
+        fields = ('id', 'x', 'y', 'parent', 'image', 'is_blank')
 
 class PlayForm(forms.ModelForm):
     """Form for the image model"""

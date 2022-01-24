@@ -3,6 +3,8 @@ Definition of views.
 """
 
 from __future__ import barry_as_FLUFL
+from distutils.sysconfig import get_makefile_filename
+from errno import EEXIST
 import os
 from django.shortcuts import render
 from django.http import HttpRequest
@@ -13,8 +15,9 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.shortcuts import render,redirect
 from app.forms import ImageForm
-from app.models import PlayImage
-from python_webapp_django.settings import MEDIA_ROOT, MEDIA_URL 
+from app.models import Game, GameTile, PlayImage, Tile
+from python_webapp_django.settings import MEDIA_ROOT, MEDIA_URL
+from app.slicer import check_swap, mix_array, validate_game 
 
 def home(request):
     """Renders the home page."""
@@ -54,15 +57,31 @@ def about(request):
         }
     )
 
-def play_view(request, id:int = None):  
+def play_view(request, id:int = None): 
+    success = False
     if request.method == 'POST':
-        pass
+        game_id = request.POST.get('validate')
+        if game_id:
+            game = Game.objects.get(id = game_id)
+            success = validate_game(game)
+            if success:
+                return render(request, 'play.html', { 'images' : game.play_image, 'success' : success})
+        
+        game_tile_id = request.POST.get('gt_id')
+        game_tile = GameTile.objects.get(id = game_tile_id)
+        game_info = check_swap(game_tile)        
+        return render(request, 'play.html', { 'images' : game_info.game_tiles, 'parent' : game_info.game, 'success' : success, 'media_root': MEDIA_ROOT, 'media_url': MEDIA_URL})
+
     elif request.method == 'GET':
         if id is None:
-            pass
+            all_imgs = PlayImage.objects.all()
+            imgs = all_imgs[len(all_imgs)-1]
         else:
-            imgs = PlayImage.objects.all()
-            return render(request, 'play.html', {'images': imgs, 'media_root': MEDIA_ROOT, 'media_url': MEDIA_URL})
+            imgs = PlayImage.objects.get(id = id)
+        
+        game_info = mix_array(request, imgs)
+        return render(request, 'play.html', { 'images' : game_info.game_tiles, 'parent' : game_info.game, 'success' : False, 'media_root': MEDIA_ROOT, 'media_url': MEDIA_URL})
+
 
 def signup_view(request):
     form = UserCreationForm(request.POST)

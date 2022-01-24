@@ -14,7 +14,7 @@
 <div class="row">
     {% if user.is_authenticated %}
     <div class="col-md-4">
-        <h2>Hi {{ user.username }}!</h2>
+        <h2>Hi {{ user.username }} !</h2>
         <p><a class="btn btn-default" href="{% url 'play' %}">Play &raquo;</a></p>
     </div>
     <div class="col-md-4">

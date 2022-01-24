@@ -2,11 +2,12 @@
 
 {% block content %}
 {% load static %}
-<h1>upload screen</h1>
+<div style="min-height:80%; padding-top: 10%">
 
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
    {{ form.as_p }}
-  <button type="submit">Upload and play</button>
+  <button type="submit" class="btn btn-default">Upload and play</button>
 </form>
+</div>
 {% endblock %}
