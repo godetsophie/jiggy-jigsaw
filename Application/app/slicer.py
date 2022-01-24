@@ -1,9 +1,7 @@
 from io import BytesIO
 import os
-from math import sqrt, ceil, floor
+from math import floor
 from telnetlib import GA
-from tkinter import image_names
-from turtle import title, width
 from xmlrpc.client import boolean
 from PIL import Image
 from django.core.files import File
