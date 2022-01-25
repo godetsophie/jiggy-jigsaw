@@ -9,7 +9,7 @@ class GameInfo:
         self.game = game
         self.tiles = tiles 
 
-def get_game_info(game : Game, tiles : np.ndarray[Any, np.dtype[Tile]]) -> GameInfo:
+def get_game_info(game : Game, tiles : list) -> GameInfo:
     return GameInfo(game, get_2d_array(tiles, game.play_image.level))
 
 def get_2d_array(game_tiles, m:int):
@@ -19,7 +19,7 @@ def get_2d_array(game_tiles, m:int):
 def get_1d_array(game_tiles, m:int):
     return np.array.flatten(game_tiles) 
 
-def swap_tiles(tiles : np.ndarray[Any, np.dtype[Tile]], empty_index : int, previous_index : int) -> np.ndarray[Any, np.dtype[Tile]]:
+def swap_tiles(tiles : list, empty_index : int, previous_index : int) -> list:
     # swap features between empty and random: index
     empty = tiles[empty_index]
     previous = tiles[previous_index]

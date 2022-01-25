@@ -12,7 +12,7 @@ _NEIGHBOURS = 'NEIGHBOURS'
 def cache_game(game : Game):
     cache.set(_GAME, game)
     
-def cache_tiles(array : np.ndarray[Any, np.dtype[Tile]]):
+def cache_tiles(array : list):
     cache.set(_TILES, array)
 
     # find current EMPTY
@@ -33,7 +33,7 @@ def get_cached_empty() -> int:
 def get_cached_neighbours():
     return cache.get(_NEIGHBOURS)
 
-def cache_neighbours_from_empty(empty_index : int, array : np.ndarray[Any, np.dtype[Tile]]):
+def cache_neighbours_from_empty(empty_index : int, array : list):
     # find neighbours of current EMPTY
     current_neighbours = get_cached_neighbour_grid(3)[empty_index]
     cache.set(_NEIGHBOURS, current_neighbours)
