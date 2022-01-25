@@ -26,7 +26,7 @@ def home(request):
         'index.html',
         {
             'title':'Home Page',
-            'year':datetime.now().year,
+            'year':datetime.now().year, 
         }
     )
 
