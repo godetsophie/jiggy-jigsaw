@@ -40,7 +40,6 @@ def slice_image(
 
             img_piece.save(thumb_io, 'JPEG')
             tile = Tile.objects.create(x=x_index, y= y_index
-                                    , index = x_index + y_index * n
                                     , parent=play_image
                                     , image = File(thumb_io, name=f'{play_image.id}_{x_index}_{y_index}')
                                     , is_blank = is_blank)
@@ -66,7 +65,7 @@ def start_game(request, play_image) -> GameInfo:
     cache_tiles(default_array)
     tiles = get_cached_tiles()
     previous = get_cached_empty()
-    for c in list(range(0, 2)):
+    for c in list(range(0, n * n)):
         empty = get_cached_empty()
         neighbours = get_cached_neighbours()
 

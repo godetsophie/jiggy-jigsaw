@@ -6,7 +6,13 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-from app.models import PlayImage, Tile
+from app.models import PlayImage
+
+LEVELS = [
+    (3, 'Easy'),
+    (4, 'Medium'),
+    (5, 'Master'),
+]
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -31,18 +37,9 @@ class SignUpForm(UserCreationForm):
 
 class ImageForm(forms.ModelForm):
     """Form for the image model"""
+    #level = forms.IntegerField(label='Select a level', widget=forms.Select(choices=LEVELS))
     class Meta:
         model = PlayImage
+        
         fields = ('id', 'title', 'image')
 
-class TileForm(forms.ModelForm):
-    """Form for the image model"""
-    class Meta:
-        model = Tile
-        fields = ('id', 'x', 'y', 'parent', 'image', 'is_blank')
-
-class PlayForm(forms.ModelForm):
-    """Form for the image model"""
-    class Meta:
-        model = PlayImage
-        fields = ('title', 'image')

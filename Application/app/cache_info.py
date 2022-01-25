@@ -1,3 +1,4 @@
+from cmath import sqrt
 from math import floor
 from typing import Any, List
 from django.core.cache import cache
@@ -34,8 +35,9 @@ def get_cached_neighbours():
     return cache.get(_NEIGHBOURS)
 
 def cache_neighbours_from_empty(empty_index : int, array : list):
+    n = 3
     # find neighbours of current EMPTY
-    current_neighbours = get_cached_neighbour_grid(3)[empty_index]
+    current_neighbours = get_cached_neighbour_grid(n)[empty_index]
     cache.set(_NEIGHBOURS, current_neighbours)
 
 def get_cached_neighbour_grid(n : int):
