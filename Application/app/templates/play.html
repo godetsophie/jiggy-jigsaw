@@ -1,7 +1,7 @@
 
 {% extends "layout.html" %}
 
-{% block content %} 
+{% block content %}
 {% load static %}
 <div style="height:80%; padding-top: 10%;">
         <form method="post">
@@ -12,7 +12,7 @@
                 {% for x in images %}
                     <div style="display: flex; justify-content: center; ">
                     {% for y in x %}
-                        <button type="submit" name='gt_id' value={{y.id}}><img src={{ y.tile.image.url }} ;' /></button>
+                        <button type="submit" name='tile_id' value={{y.id}}><img src={{ y.image.url }} ;' /></button>
         
                     {% endfor %}    
                     </div>

@@ -53,6 +53,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT' : 900
+    }
+}
+
 ROOT_URLCONF = 'python_webapp_django.urls'
 
 TEMPLATES = [

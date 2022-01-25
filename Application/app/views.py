@@ -4,21 +4,20 @@ Definition of views.
 
 from __future__ import barry_as_FLUFL
 from distutils.sysconfig import get_makefile_filename
-from errno import EEXIST
-import os
 from django.shortcuts import render
 from django.http import HttpRequest
-from django.template import RequestContext
 from datetime import datetime
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.shortcuts import render,redirect
 from app.forms import ImageForm
-from app.models import Game, GameTile, PlayImage, Tile
-from python_webapp_django.settings import MEDIA_ROOT, MEDIA_URL
-from app.slicer import check_swap, mix_array, validate_game 
-
+from app.models import PlayImage
+from app.play import do_one_move, validate
+from app.preparer import start_game
+from app.cache_info import clear_cache, get_cached_game, get_cached_tiles
+from app.common import get_2d_array
+ 
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -59,28 +58,34 @@ def about(request):
 
 def play_view(request, id:int = None): 
     success = False
+    message = ''
     if request.method == 'POST':
         game_id = request.POST.get('validate')
         if game_id:
-            game = Game.objects.get(id = game_id)
-            success = validate_game(game)
-            if success:
-                return render(request, 'play.html', { 'images' : game.play_image, 'success' : success})
-        
-        game_tile_id = request.POST.get('gt_id')
-        game_tile = GameTile.objects.get(id = game_tile_id)
-        game_info = check_swap(game_tile)        
-        return render(request, 'play.html', { 'images' : game_info.game_tiles, 'parent' : game_info.game, 'success' : success, 'media_root': MEDIA_ROOT, 'media_url': MEDIA_URL})
+            if validate(game_id):
+                success = True
+                return render(request, 'play.html', { 'success' : success })
+            else:
+                message = 'Too bad. Keep trying!'
+                game = get_cached_game()
+                tiles = get_2d_array(get_cached_tiles(), game.play_image.level)
+                return render(request, 'play.html', { 'images' : tiles, 'parent' : game, 'success' : success, 'message' : message})
+        else:
+            tile_id = request.POST.get('tile_id')
+            if tile_id:
+                game_info = do_one_move(int(tile_id))
+        return render(request, 'play.html', { 'images' : game_info.tiles, 'parent' : game_info.game, 'success' : success, 'message' : message})
 
     elif request.method == 'GET':
+        clear_cache()
         if id is None:
             all_imgs = PlayImage.objects.all()
             imgs = all_imgs[len(all_imgs)-1]
         else:
             imgs = PlayImage.objects.get(id = id)
         
-        game_info = mix_array(request, imgs)
-        return render(request, 'play.html', { 'images' : game_info.game_tiles, 'parent' : game_info.game, 'success' : False, 'media_root': MEDIA_ROOT, 'media_url': MEDIA_URL})
+        game_info = start_game(request, imgs)
+        return render(request, 'play.html', { 'images' : game_info.tiles, 'parent' : game_info.game, 'success' : success, 'message' : message})
 
 
 def signup_view(request):
