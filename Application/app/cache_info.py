@@ -24,7 +24,7 @@ def cache_tiles(array : list):
 def get_cached_game() -> Game:
     return cache.get(_GAME)
 
-def get_cached_tiles() -> np.ndarray[Any, np.dtype[Tile]]:
+def get_cached_tiles() -> list:
     return cache.get(_TILES)
 
 def get_cached_empty() -> int:
