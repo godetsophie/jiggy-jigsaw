@@ -33,13 +33,3 @@ class Game(models.Model):
     success = models.BooleanField(default=False)
     class Meta:
         db_table = 'game'
-
-class GameTile(models.Model):
-    id = models.AutoField(primary_key=True)
-    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='game')
-    tile = models.ForeignKey(Tile, on_delete=models.CASCADE, related_name='tile')
-    current_x = models.IntegerField(default=0)
-    current_y = models.IntegerField(default=0)
-    name = models.TextField(default='')
-    class Meta:
-        db_table = 'gametile'
