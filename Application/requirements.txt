@@ -3,3 +3,5 @@ django-crispy-forms
 whitenoise
 pillow
 psycopg2-binary
+numpy
+random
