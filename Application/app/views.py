@@ -61,6 +61,10 @@ def play_view(request, id:int = None):
     success = False
     message = ' '
     if request.method == 'POST':
+        new_game = request.POST.get('new_game')
+        if new_game:
+            return start_new_game(request, id)
+
         game_id = request.POST.get('validate')
         if game_id:
             game = get_cached_game()
@@ -79,17 +83,20 @@ def play_view(request, id:int = None):
         return render(request, 'play.html', { 'images' : game_info.tiles, 'parent' : game_info.game, 'success' : success, 'message' : message})
 
     elif request.method == 'GET':
-        clear_cache()
-        if id is None:
-            all_imgs = PlayImage.objects.all()
-            i = random.randrange(1, len(all_imgs))
-            imgs = all_imgs[i]
-        else:
-            imgs = PlayImage.objects.get(id = id)
-        
-        game_info = start_game(request, imgs)
-        return render(request, 'play.html', { 'images' : game_info.tiles, 'parent' : game_info.game, 'success' : success, 'message' : message})
+        return start_new_game(request, id)
 
+def start_new_game(request, id : int):
+    clear_cache()
+    if id is None:
+        all_imgs = PlayImage.objects.all()
+        i = random.randrange(1, len(all_imgs))
+        imgs = all_imgs[i]
+    else:
+        imgs = PlayImage.objects.get(id = id)
+        
+    game_info = start_game(request, imgs)
+    message = game_info.game.play_image.title
+    return render(request, 'play.html', { 'images' : game_info.tiles, 'parent' : game_info.game, 'success' : False, 'message' : message})
 
 def signup_view(request):
     form = UserCreationForm(request.POST)
@@ -99,7 +106,6 @@ def signup_view(request):
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
-        print("ok")
         return redirect('home')
     return render(request, 'registration/signup.html', {'form': form})
 

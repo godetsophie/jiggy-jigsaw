@@ -34,6 +34,8 @@ def slice_image(
     
     tile_width = int(floor(w / n))
     tile_height = int(floor(h / n))
+    w = tile_width * n
+    h = tile_height * n
     x_index = y_index = 0
     for x in range(0, w, tile_width):
         y_index = 0
@@ -80,7 +82,7 @@ def start_game(request, play_image) -> GameInfo:
     cache_tiles(default_array)
     tiles = get_cached_tiles()
     previous = get_cached_empty()
-    for c in list(range(0, n * n)):
+    for c in list(range(0, n * n * n)):
         empty = get_cached_empty()
         neighbours = get_cached_neighbours()
 

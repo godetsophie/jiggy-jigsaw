@@ -19,7 +19,6 @@ def cache_tiles(array : list):
     # find current EMPTY
     empty_index = next((i for i, item in enumerate(array) if item.x == 0 and item.y == 0), ValueError)
     cache.set(_EMPTY, empty_index)
-    print('INDEX', empty_index)
     cache_neighbours_from_empty(empty_index, array)
 
 def get_cached_game() -> Game:

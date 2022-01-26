@@ -12,13 +12,14 @@ import app.forms
 from app.views import signup_view
 
 # Uncomment the next lines to enable the admin:
-# from django.conf.urls import include
-# from django.contrib import admin
-# admin.autodiscover()
+from django.conf.urls import include
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = [
     # Examples:
     path('', app.views.home, name='home'),
+    path('admin/', admin.site.urls),
     path('play/', app.views.play_view, name='play'),
     path('play/<int:id>/', app.views.play_view, name='play'),
     path('upload', app.views.upload_image_view, name='upload'),
@@ -38,12 +39,12 @@ urlpatterns = [
     path('logout',
         django.contrib.auth.views.LogoutView.as_view(),
         {
-            'next_page': '/',
+            'next_page': '',
         },
         name='logout'),
     path('static/<path>', serve,{'document_root': settings.STATIC_ROOT}),
     # Uncomment the admin/doc line below to enable admin documentation:
-    # path(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     #path(r'^admin/', include(admin.site.urls)),

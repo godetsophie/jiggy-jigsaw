@@ -25,6 +25,5 @@ def swap_tiles(tiles : list, empty_index : int, previous_index : int) -> list:
     previous = tiles[previous_index]
     tiles[previous_index] = empty
     tiles[empty_index] = previous
-    print(tiles)
     cache_tiles(tiles)
     return tiles

@@ -23,15 +23,11 @@ def do_one_move(tile_id : int) -> GameInfo:
     neighbours = get_cached_neighbours()
 
     clicked = -1
-    print("tile id ", tile_id)
-    print("tile", neighbours)
     for index, t in enumerate(tiles):
-        print(t.id)
         if t.id == tile_id:
             clicked = index
             break
- 
-    print("clicked ", clicked)
+
     if clicked in neighbours:
         tiles = swap_tiles(tiles, empty, clicked)
     return get_game_info(game, tiles)
