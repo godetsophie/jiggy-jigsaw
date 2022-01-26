@@ -29,7 +29,7 @@ def slice_image(
         
         size = (w, h)
         image_to_use.thumbnail(size)
-        
+
     default_array = []
     
     tile_width = int(floor(w / n))
@@ -40,6 +40,7 @@ def slice_image(
         for y in range(0, h, tile_height):
             image_to_use = img
             is_blank = False
+            size = (tile_width, tile_height)
             if x == 0 and y == 0:
                 is_blank = True
                 blank = PlayImage.objects.get(title = 'BLANK')

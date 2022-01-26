@@ -20,7 +20,7 @@
                 {% for x in images %}
                     <div style="display: flex; justify-content: center; ">
                         {% for y in x %}
-                            <button type="submit" name='tile_id' value={{y.id}}><img src={{ y.image.url }} /></button>
+                            <button type="submit" name='tile_id' value={{y.id}}><img src={{ y.image.url }} class='vertical-align: middle; padding: auto;' /></button>
                         {% endfor %}    
                     </div>
                 {% endfor %}
