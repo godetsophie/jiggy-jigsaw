@@ -16,6 +16,20 @@ def slice_image(
     image_to_use = img
     w, h = img.size
 
+    # crashes if > 300px
+    
+    if w > 300 or h > 300:
+        ratio = 1
+        if w > h:
+            ratio = 300 / w
+        else:
+            ratio = 300 / h
+        w = floor(w * ratio)
+        h = floor(h * ratio)
+        
+        size = (w, h)
+        image_to_use.thumbnail(size)
+        
     default_array = []
     
     tile_width = int(floor(w / n))
@@ -38,7 +52,7 @@ def slice_image(
 
             thumb_io = BytesIO() # create a BytesIO object
 
-            img_piece.save(thumb_io, 'JPEG')
+            img_piece.save(thumb_io, 'JPEG', quality = 85)
             tile = Tile.objects.create(x=x_index, y= y_index
                                     , parent=play_image
                                     , image = File(thumb_io, name=f'{play_image.id}_{x_index}_{y_index}')

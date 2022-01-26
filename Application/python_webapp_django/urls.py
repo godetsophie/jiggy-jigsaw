@@ -38,7 +38,7 @@ urlpatterns = [
     path('logout',
         django.contrib.auth.views.LogoutView.as_view(),
         {
-            'next_page': 'home/',
+            'next_page': '/',
         },
         name='logout'),
     path('static/<path>', serve,{'document_root': settings.STATIC_ROOT}),

@@ -4,6 +4,7 @@ Definition of views.
 
 from __future__ import barry_as_FLUFL
 from distutils.sysconfig import get_makefile_filename
+import random
 from django.shortcuts import render
 from django.http import HttpRequest
 from datetime import datetime
@@ -58,29 +59,31 @@ def about(request):
 
 def play_view(request, id:int = None): 
     success = False
-    message = ''
+    message = ' '
     if request.method == 'POST':
         game_id = request.POST.get('validate')
         if game_id:
+            game = get_cached_game()
             if validate(game_id):
                 success = True
-                return render(request, 'play.html', { 'success' : success })
+                return render(request, 'play.html', { 'image' : game.play_image, 'success' : success })
             else:
                 message = 'Too bad. Keep trying!'
-                game = get_cached_game()
                 tiles = get_2d_array(get_cached_tiles(), game.play_image.level)
                 return render(request, 'play.html', { 'images' : tiles, 'parent' : game, 'success' : success, 'message' : message})
         else:
             tile_id = request.POST.get('tile_id')
             if tile_id:
                 game_info = do_one_move(int(tile_id))
+            message = game_info.game.play_image.title
         return render(request, 'play.html', { 'images' : game_info.tiles, 'parent' : game_info.game, 'success' : success, 'message' : message})
 
     elif request.method == 'GET':
         clear_cache()
         if id is None:
             all_imgs = PlayImage.objects.all()
-            imgs = all_imgs[len(all_imgs)-1]
+            i = random.randrange(1, len(all_imgs))
+            imgs = all_imgs[i]
         else:
             imgs = PlayImage.objects.get(id = id)
         
@@ -96,6 +99,7 @@ def signup_view(request):
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
+        print("ok")
         return redirect('home')
     return render(request, 'registration/signup.html', {'form': form})
 
